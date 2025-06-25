@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Trade History - AlgoTradeBolt{% endblock %}
+{% block header %}All Recent Trades{% endblock %}
+
+{% block content %}
+<div class="bg-secondary border border-border rounded-lg p-5">
+    
+    <!-- Sorting Controls -->
+    <div class="flex items-center space-x-4 mb-5">
+        <span class="text-sm font-semibold text-text-secondary">Sort by:</span>
+        <a href="{{ url_for('trade_history', sort_by='date') }}" 
+           class="px-3 py-1 text-sm rounded-md transition-colors 
+                  {% if sort_by == 'date' %}bg-accent text-white{% else %}bg-primary hover:bg-border{% endif %}">
+            Date
+        </a>
+        <a href="{{ url_for('trade_history', sort_by='symbol') }}" 
+           class="px-3 py-1 text-sm rounded-md transition-colors 
+                  {% if sort_by == 'symbol' %}bg-accent text-white{% else %}bg-primary hover:bg-border{% endif %}">
+            Cryptocurrency
+        </a>
+    </div>
+
+    <!-- Trade History Table -->
+    <div class="overflow-x-auto">
+        {{ history_html | safe }}
+    </div>
+</div>
+{% endblock %}

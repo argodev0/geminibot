@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Charts - AlgoTradeBolt{% endblock %}
+{% block header %}TradingView Chart{% endblock %}
+
+{% block content %}
+<div class="bg-secondary border border-border rounded-lg h-[75vh]">
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+      <div id="tradingview_chart_widget" style="height:calc(100% - 32px);width:100%"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+      <script type="text/javascript">
+      new TradingView.widget(
+      {
+      "autosize": true,
+      "symbol": "BINANCE:BTCUSDT",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "en",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "container_id": "tradingview_chart_widget"
+    }
+      );
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
+</div>
+{% endblock %}

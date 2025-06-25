@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AlgoTradeBolt{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0D1117', // Main background
+                        'secondary': '#161B22', // Card, Sidebar background
+                        'border': '#30363D',
+                        'text-primary': '#C9D1D9', // Main text
+                        'text-secondary': '#8B949E', // Subdued text
+                        'accent': '#58A6FF', // Blue for buttons, links
+                        'success': '#3FB950',
+                        'danger': '#F85149',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .table { width: 100%; font-size: 0.875rem; }
+        .table th, .table td { padding: 0.75rem 1rem; white-space: nowrap; border-bottom: 1px solid #30363D; }
+        .table th { font-weight: 600; color: #8B949E; text-align: left; }
+        .table td { color: #C9D1D9; }
+        .table tbody tr:last-child td { border-bottom: none; }
+        .nav-link { display: flex; align-items: center; padding: 0.5rem 0.75rem; border-radius: 0.5rem; transition: background-color 0.2s; }
+        .nav-link:hover { background-color: rgba(88, 166, 255, 0.2); }
+        .nav-link.active { background-color: rgba(88, 166, 255, 0.2); border: 1px solid rgba(88, 166, 255, 0.3); font-weight: 600; }
+    </style>
+</head>
+<body class="bg-primary text-text-primary flex h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-secondary border-r border-border flex-shrink-0 flex flex-col">
+        <div class="p-6">
+            <div class="flex items-center space-x-3">
+                <svg class="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h1 class="text-2xl font-bold">AlgoTradeBolt</h1>
+            </div>
+        </div>
+        <nav class="mt-4 px-4 space-y-2">
+            <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                <svg class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Dashboard
+            </a>
+            <a href="{{ url_for('trade_history') }}" class="nav-link {% if request.endpoint == 'trade_history' %}active{% endif %}">
+                 <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+                Trade History
+            </a>
+            <a href="{{ url_for('tradingview_chart') }}" class="nav-link {% if request.endpoint == 'tradingview_chart' %}active{% endif %}">
+                <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.306a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.281m5.94 2.28l-2.28 5.941" /></svg>
+                TradingView
+            </a>
+            <a href="{{ url_for('strategy_tester') }}" class="nav-link {% if request.endpoint == 'strategy_tester' %}active{% endif %}">
+                 <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                Strategy Tester
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <header class="bg-secondary border-b border-border flex-shrink-0">
+            <div class="px-6 h-16 flex justify-between items-center">
+                 <h2 class="text-lg font-semibold">{% block header %}{% endblock %}</h2>
+                 <div class="flex items-center space-x-4">
+                     <button class="px-4 py-2 text-sm font-semibold text-white bg-accent rounded-md hover:bg-blue-500 transition-colors">
+                         + Create Bot
+                     </button>
+                 </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-primary p-6">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</body>
+</html>
